@@ -5,6 +5,7 @@
            class="input-task__inp"
            @input="$emit('input',$event.target.value)"
            :value="value"
+           @keypress="clickEnter($event)"
     >
     <button class="input-task__btn" @click="addTask">Добавить задачу</button>
   </div>
@@ -19,7 +20,12 @@ export default{
   methods: {
     addTask(){
       this.$emit("add-task");
-    }
+    },
+    clickEnter(event){
+      if(event.keyCode == 13){
+        this.addTask();
+      }
+    },
   }
 }
 </script>
