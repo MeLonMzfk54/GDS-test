@@ -9,16 +9,21 @@
           <option v-for="(option, index) in todoTitles" :key="index" :value="option.title">{{ option.title }}</option>
         </select>
         <div class="todo__list" v-if="tasks.length">
-          <task @completeTask="completeTask(index)" v-for="(item, index) in displayTasks" :title="item.task" :class="item.status" :key="index"></task>
+          <div v-if="displayTasks.length">
+            <task @completeTask="completeTask(index)" v-for="(item, index) in displayTasks" :title="item.task" :class="item.status" :key="index"></task>
+          </div>
+          <div v-else>
+            Таких нет
+          </div>
         </div>
         <div v-else class="todo__list">
           Список задач пуст :(
         </div>
       </div>
-      <button class="todo__btn" v-show="completedTasks.length" @click="clearCompleted">
+      <button class="todo__btn" v-show="completedTasks.length && todoTitle[0].title.toLowerCase() === 'все задачи'" @click="clearCompleted">
         Очистить выполненные
       </button>
-      <input-task v-model="newTask" @add-task="addTask"></input-task>
+      <input-task v-show="todoTitle[0].title.toLowerCase() === 'все задачи'" v-model="newTask" @add-task="addTask"></input-task>
     </div>
   </div>
 </template>
