@@ -13,7 +13,7 @@
           Пока что вы не добавили ни одной задачи :(
         </div>
       </div>
-      <input-task></input-task>
+      <input-task v-model="newTask" @add-task="addTask"></input-task>
     </div>
   </div>
 </template>
@@ -25,9 +25,11 @@ import InputTask from "@/components/InputTask"
 // import Filter from "@/components/Filter"
 
 export default{
+  name: "ToDo",
   data(){
     return{
       todoTitles: ["Активные задачи", "Все задачи", "Выполненные задачи"],
+      newTask: "",
     }
   },
   components: {
@@ -45,6 +47,9 @@ export default{
     completeTask(id){
       this.$store.commit("completeTask",id);
     },
+    addTask(){
+      this.$store.commit("addTask", this.newTask);
+    }
   }
 }
 </script>
@@ -53,7 +58,7 @@ export default{
 $main-color: #2F4858;
 
 .todo{
-  width: 320px;
+  max-width: 320px;
   &__inner{}
   &__card{
     box-shadow: 0 3px 20px #eee;
